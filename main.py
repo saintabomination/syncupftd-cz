@@ -5,14 +5,13 @@ from datetime import timedelta
 NAME_DAY_API = 'https://svatkyapi.cz/api'
 
 def get_name_day(date):
-    request = requests.get(f'{NAME_DAY_API}/day/{date}')
-    
-    if request.status_code != 200:
+    try:
+        request = requests.get(f'{NAME_DAY_API}/day/{date}')
+        data = request.json()
+        return data['name']
+    except:
         return 'N/A'
-
-    data = request.json()
-    return data['name']
-
+    
 today = date.today()
 yesterday = today - timedelta(days = 1)
 tomorrow = today + timedelta(days = 1)
